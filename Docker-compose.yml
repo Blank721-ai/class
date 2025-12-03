@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8082:80"
+    volumes:
+      - ./app:/var/www/html #./app >> Website code place
+    depends_on:
+      - Class_Db
+    networks:
+      - Class-network
+
+  Class_Db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: Class_Db
+      POSTGRES_USER: Class_org #(as you like)
+      POSTGRES_PASSWORD: #(as you like)
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - Class-network
+
+volumes:
+  db_data:
+
+
+networks:
+  Class-network:
+    driver: bridge
